@@ -1,0 +1,45 @@
+1.file operation 
+#!/bin/bash
+# File operations script
+
+echo "Creating a file named sample.txt"
+touch sample.txt
+
+echo "Writing data to file..."
+echo "Hello, this is a text file." > sample.txt
+
+echo "Displaying file content"
+cat sample.txt
+
+echo "Renaming file to myfile.txt"
+mv sample.txt myfile.txt
+
+echo "Deleting file..."
+rm myfile.txt
+
+echo "File operations completed."
+
+2.For creation :
+#!/bin/bash
+# Process creation script
+
+echo "Starting a background process"
+sleep 60 &
+
+pid=$!
+echo "Process created with PID: $pid"
+
+echo "Checking process using ps command"
+ps -p $pid
+
+3.process monitoring 
+#!/bin/bash
+# Process monitoring script
+
+echo "Monitoring running processes (press Ctrl+C to stop)"
+
+while true
+do
+    ps -e | head -10   # show first 10 processes
+    sleep 5
+done

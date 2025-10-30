@@ -1,0 +1,39 @@
+#!binbash
+# AI-based System Monitor (Expert System)
+
+cpu_load=$(uptime  awk -F'load average' '{print $2}'  cut -d',' -f1)
+mem_free=$(free -m  awk 'NR==2 {print $4}')
+disk_free=$(df -h  awk 'NR==2 {print $4}')
+
+echo ==============================
+echo  AI System Monitor - Expert System 
+echo ==============================
+echo CPU Load    $cpu_load
+echo Free Memory $mem_free MB
+echo Disk Free   $disk_free
+echo ==============================
+
+# Rule 1 High CPU usage
+if (( $(echo $cpu_load = 2.0  bc -l) )); then
+  echo Rule 1 High CPU usage detected.
+  echo Advice Close unnecessary applications.
+fi
+
+# Rule 2 Low free memory
+if [ $mem_free -lt 500 ]; then
+  echo Rule 2 Low free memory detected.
+  echo Advice Consider restarting memory-hogging processes.
+fi
+
+# Rule 3 Disk usage above 80%
+disk_percent=$(df -h  awk 'NR==2 {print $5}'  tr -d '%')
+if [ $disk_percent -gt 80 ]; then
+  echo Rule 3 Disk usage above 80%.
+  echo Advice Clean temporary files, or expand disk.
+fi
+
+# Healthy system condition
+if (( $(echo $cpu_load = 2.0  bc -l) )) && [ $mem_free -ge 500 ] && [ $disk_percent -le 80 ]; then
+  echo System Status ✅ Healthy. No action needed.
+
+fi
